@@ -49,28 +49,13 @@ import org.wso2.carbon.identity.oauth2.token.OAuthTokenReqMessageContext;
 import org.wso2.carbon.identity.oauth2.util.OAuth2Util;
 import org.wso2.carbon.identity.openidconnect.internal.OpenIDConnectServiceComponentHolder;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-import static org.wso2.carbon.identity.oauth.common.OAuthConstants.OIDCClaims.AUTH_TIME;
-import static org.wso2.carbon.identity.oauth.common.OAuthConstants.OIDCClaims.AZP;
-import static org.wso2.carbon.identity.oauth.common.OAuthConstants.OIDCClaims.IDP_SESSION_KEY;
-import static org.wso2.carbon.identity.oauth.common.OAuthConstants.OIDCClaims.NONCE;
+import static org.wso2.carbon.identity.oauth.common.OAuthConstants.OIDCClaims.*;
 
 /**
- *
- * Copy of default IDToken generator for the OpenID Connect Implementation.
+ * Default IDToken generator for the OpenID Connect Implementation.
  * This IDToken Generator utilizes the Nimbus SDK to build the IDToken.
- *
- * Add an offset on notBeforeTime() for the generated token
  */
 public class NotBeforeWithOffsetIDTokenBuilder implements IDTokenBuilder {
 
@@ -175,11 +160,11 @@ public class NotBeforeWithOffsetIDTokenBuilder implements IDTokenBuilder {
                 notBeforeTimeOffsetValue = Long.parseLong(notBeforeTimeOffsetProperty);
             } catch (Exception ex) {
                 log.error("An exception occurred while parsing the System property 'notBeforeTimeOffset'"
-                        + ", value:" + notBeforeTimeOffsetProperty);
+                        + ", property value:" + notBeforeTimeOffsetProperty);
                 log.error(ex);
             }
         }
-        log.debug("Flowbird patch : applying an offset of " + notBeforeTimeOffsetValue + " ms on the notBeforeTime attribute");
+        log.debug("Flowbird patch: applying an offset of " + notBeforeTimeOffsetValue + " ms on the notBeforeTime attribute");
         jwtClaimsSetBuilder.notBeforeTime(new Date(currentTimeInMillis - notBeforeTimeOffsetValue));
         //----------------------------------------------------------------------------------
 
